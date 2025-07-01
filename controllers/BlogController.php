@@ -15,19 +15,23 @@ class BlogController extends AbstractController
     public function category(string $categoryId) : void
     {
         // si la catégorie existe
-        $this->render("category", []);
-
-        // sinon
-        $this->redirect("index.php");
+        if (isset($categoryId)) {
+            $this->render("category", []);
+            // sinon
+        } else {
+            $this->redirect("index.php");
+        }
     }
 
     public function post(string $postId) : void
     {
         // si le post existe
-        $this->render("post", []);
-
-        // sinon
-        $this->redirect("index.php");
+        if (isset($postId)) {
+            $this->render("post", []);
+            // sinon
+        } else {
+            $this->redirect("index.php");
+        }
     }
 
     public function checkComment() : void
