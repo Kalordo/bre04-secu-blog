@@ -38,4 +38,28 @@ class CategoryManager extends AbstractManager {
 
         return null;
     }
+
+    public function findByPost(int $postId): array {
+        $stmt = $this->db->prepare("
+            SELECT c.id, c.title, c.description
+            FROM categories c
+            INNER JOIN post_categories pc ON pc.category_id = c.id
+            WHERE pc.post_id = :postId
+        ");
+        $stmt->execute([':postId' => $postId]);
+
+        $categoriesResult = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $categories = [];
+
+        foreach ($categoriesResult as $categoryData) {
+            $categories[] = new Category(
+                (int) $categoryData['id'],
+                $categoryData['title'],
+                $categoryData['description']
+            );
+        }
+
+        return $categories;
+    }
 }

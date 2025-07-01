@@ -13,18 +13,37 @@ class UserManager extends AbstractManager {
     public function findByEmail(string $email): ?User {
         $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->execute([':email' => $email]);
-        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userResult = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($userData) {
+        if ($userResult) {
             $user = new User(
-                (int) $userData['id'],
-                $userData['username'],
-                $userData['email'],
-                $userData['password'],
-                $userData['role'],
-                new \DateTimeImmutable($userData['created_at'])
+                (int) $userResult['id'],
+                $userResult['username'],
+                $userResult['email'],
+                $userResult['password'],
+                $userResult['role'],
+                new \DateTimeImmutable($userResult['created_at'])
             );
             return $user;
+        }
+
+        return null;
+    }
+
+        public function findOne(int $id): ?User {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        $userResult = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($userResult) {
+            return new User(
+                (int) $userResult['id'],
+                $userResult['username'],
+                $userResult['email'],
+                $userResult['password'],
+                $userResult['role'],
+                $userResult['created_at']
+            );
         }
 
         return null;

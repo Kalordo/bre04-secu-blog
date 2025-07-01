@@ -8,15 +8,18 @@
 class Comment {
     private int $id;
     private string $content;
-    private User $author;
-    private Post $post;
+    private int $userId;
+    private int $postId;
+    private string $createdAt;
 
-    public function __construct(int $id, string $content, User $author, Post $post) {
-        $this->id = $id;
+    public function __construct(int $id, string $content, int $userId, int $postId, string $createdAt) {
+        $this->id = $id; 
         $this->content = $content;
-        $this->author = $author;
-        $this->post = $post;
+        $this->userId = $userId;
+        $this->postId = $postId;
+        $this->createdAt = $createdAt;
     }
+
 
     public function getId(): int {
         return $this->id;
@@ -32,17 +35,24 @@ class Comment {
         $this->content = $content;
     }
 
-    public function getAuthor(): User {
-        return $this->author;
+    public function getUserId(): int {
+        return $this->userId;
     }
-    public function setAuthor(User $author): void {
-        $this->author = $author;
+    public function setUserId(int $userId): void {
+        $this->userId = $userId;
     }
 
-    public function getPost(): Post {
-        return $this->post;
+    public function getPostId(): int {
+        return $this->postId;
     }
-    public function setPost(Post $post): void {
-        $this->post = $post;
+    public function setPostId(int $postId): void {
+        $this->postId = $postId;
+    }
+
+    public function getCreatedAt(): string {
+        return $this->createdAt;
+    }
+    public function setCreatedAt(string $createdAt): void {
+        $this->createdAt = $createdAt;
     }
 }
